@@ -1,0 +1,70 @@
+device: auto
+out_dir: results
+case: bearing
+seed: 76
+num_workers: 0
+print: both
+metric_best: mse
+
+### debug settings
+neptune_agg: false
+neptune_each_run: true
+tensorboard_each_run: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/bearing
+  train_file: train.csv
+  test_file: test.csv
+  scaler_type: cminmax
+  normalize: true
+  window_size: 30
+  include_lowf: true
+  include_highf: true
+  include_exo: true
+  aug_lowf_diff: true
+  only_lowf_diff: true
+  y_var: ['Fx PR', 'Fz PR']
+
+task:
+  type: bearing
+  train_type: mapping
+  level: graph
+
+### default model paramters
+model:
+  output_dim: 2
+  dropout: 0.1
+  activation: silu
+  norm_func: none
+  type: timemixer
+  timemixer:
+    use_norm: 0
+    e_layers: 2
+    d_model: 16
+    topk: 3
+    d_ff: 32
+
+### training paramters
+train:
+  ckpt_period: 2
+  draw_period: 1
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 512
+  early_stop_patience: 20
+  early_stop_min: 50
+  
+### optimizer paramters
+optim:
+  warmup: true
+  warmup_iters: 500
+  base_lr: 5e-3
+  warmup_initial_lr: 1e-3
+  max_epochs: 150
+  scheduler: plateau
+  patience: 5
+  factor: 0.9
+  criterion: l2

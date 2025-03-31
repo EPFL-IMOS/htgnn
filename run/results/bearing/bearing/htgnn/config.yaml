@@ -1,0 +1,188 @@
+case: bearing
+cfg_dest: config.yaml
+dataset:
+  aug_lowf_diff: true
+  dir: datasets/bearing
+  include_exo: true
+  include_highf: true
+  include_lowf: true
+  normalize: true
+  num_classes: 1
+  only_lowf_diff: true
+  scaler_type: cminmax
+  stride: 1
+  test_file: test.csv
+  train_file: train.csv
+  use_hetero: true
+  val_split: 0.2
+  window_size: 30
+  y_var:
+  - Fx PR
+  - Fz PR
+device: auto
+draw_learned_graph: false
+fname: htgnn
+gpu_mem: false
+metric_agg: argmin
+metric_best: mse
+model:
+  activation: silu
+  cnn:
+    hidden_dim: 50
+    kernel_size: 5
+    n_channels: 10
+    n_head_layers: 1
+    n_layers: 3
+    stride: 1
+  do_norm: true
+  dropout: 0.2
+  gcnn:
+    channel_sizes:
+    - 2
+    - 2
+    - 1
+    concat: true
+    context_dim: 1
+    dilations:
+    - 1
+    - 1
+    enc_kernel_size: 5
+    enc_type: cnn
+    gated: true
+    hidden_dim: 50
+    kernel_sizes:
+    - - 3
+      - 5
+    n_head_layers: 1
+    stride: 1
+  htgnn:
+    aug_exovar: true
+    cnn:
+      channel_sizes:
+      - 4
+      - 4
+      - 1
+      dilations:
+      - 1
+      - 2
+      emb_concat: true
+      gating: true
+      kernel_sizes:
+      - 3
+      - 5
+    do_encoder_norm: false
+    do_gnn_norm: false
+    enc_type: cnn
+    exo_kernel_size: 5
+    exovar_embed_dim: 10
+    gnn_embed_dim: 40
+    gnn_norm_type: batch
+    gnn_type: gcn
+    head:
+      do_norm: false
+      embed_dim: 20
+      norm_type: batch
+      num_layers: 3
+      rnn_bidirectional: true
+      rnn_type: lstm
+      use_rnn: true
+    hetero_agg: mean
+    node_embed_dim: 10
+    num_gnn_layers: 3
+  mtgat:
+    decoder_hidden: 100
+    edge_embed_dim: 3
+    encode_edge_attr: true
+    encoder:
+      conv_pad: true
+      dilation: 1
+      encode: true
+      in_depth: false
+      kernel_size: 5
+      padding: 0
+      stride: 1
+    feat_gat_embed_dim: 100
+    forecast: true
+    gru_hid_dim: 100
+    gru_n_layers: 1
+    head_hid_dim: 100
+    head_n_layers: 3
+    num_edge_types: 4
+    num_feat_layers: 1
+    num_temp_layers: 1
+    recon_hid_dim: 100
+    recon_n_layers: 1
+    recons: true
+    time_gat_embed_dim: 100
+    use_gatv2: true
+  norm_func: batch
+  output_dim: 2
+  rnn:
+    bidirectional: false
+    head_hidden_dim: 50
+    hidden_dim: 50
+    n_head_layers: 1
+    n_layers: 1
+    rnn_type: gru
+  timemixer:
+    d_ff: 64
+    d_model: 64
+    decomp_method: moving_avg
+    down_sampling_method: avg
+    down_sampling_window: 2
+    e_layers: 6
+    moving_avg_len: 25
+    num_down_sampling_layers: 3
+    num_regression_layers: 1
+    topk: 3
+    use_norm: 1
+  type: htgnn
+neptune_agg: false
+neptune_each_run: false
+num_threads: 1
+num_workers: 0
+optim:
+  base_lr: 0.005
+  criterion: l2
+  factor: 0.9
+  lr_decay: 0.1
+  max_epochs: 150
+  min_lr: 0.0001
+  momentum: 0.9
+  optimizer: adam
+  patience: 5
+  scheduler: plateau
+  steps:
+  - 30
+  - 60
+  - 90
+  warmup: true
+  warmup_initial_lr: 0.001
+  warmup_iters: 500
+  weight_decay: 1.0e-05
+out_dir: run/results/bearing/bearing/htgnn
+print: both
+round: 5
+seed: 76
+task:
+  level: graph
+  track_graph: false
+  train_type: mapping
+  type: bearing
+tensorboard_agg: true
+tensorboard_each_run: true
+tensorboard_iter: false
+train:
+  auto_resume: true
+  batch_size: 512
+  ckpt_clean: true
+  ckpt_period: 2
+  clip_grad: false
+  draw_period: 1
+  early_stop_min: 50
+  early_stop_patience: 20
+  epoch_resume: -1
+  load_pretrained: false
+  max_grad_norm: 1
+  pretrained_model_path: ''
+  shuffle: true

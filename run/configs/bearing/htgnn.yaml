@@ -1,0 +1,88 @@
+# fix conv
+device: auto
+out_dir: results
+case: bearing
+seed: 76
+num_workers: 0
+print: both
+metric_best: mse
+
+### debug settings
+neptune_agg: false
+neptune_each_run: false
+tensorboard_each_run: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/bearing
+  train_file: train.csv
+  test_file: test.csv
+  scaler_type: cminmax
+  use_hetero: true
+  normalize: true
+  window_size: 30
+  include_lowf: true
+  include_highf: true
+  include_exo: true
+  aug_lowf_diff: true
+  only_lowf_diff: true
+  y_var: ['Fx PR', 'Fz PR']
+
+task:
+  type: bearing
+  train_type: mapping
+  level: graph
+
+### default model paramters
+model:
+  output_dim: 2
+  dropout: 0.2
+  activation: silu
+  type: htgnn
+  htgnn:
+    aug_exovar: true
+    cnn:
+      gating: true
+      channel_sizes: [4, 4, 1]
+      kernel_sizes: [3, 5]
+      dilations: [1, 2]
+      emb_concat: true
+    node_embed_dim: 10
+    exovar_embed_dim: 10
+    gnn_embed_dim: 40
+    num_gnn_layers: 3
+    do_encoder_norm: false
+    do_gnn_norm: false
+    gnn_norm_type: batch
+    hetero_agg: mean
+    head:
+      do_norm: false
+      num_layers: 3
+      embed_dim: 20
+      use_rnn: true
+      rnn_type: lstm
+      rnn_bidirectional: true
+
+### training paramters
+train:
+  draw_period: 1
+  ckpt_period: 2
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 512
+  early_stop_patience: 20
+  early_stop_min: 50
+  
+### optimizer paramters
+optim:
+  warmup: true
+  warmup_iters: 500
+  base_lr: 5e-3
+  warmup_initial_lr: 1e-3
+  max_epochs: 150
+  scheduler: plateau
+  patience: 5
+  factor: 0.9
+  criterion: l2

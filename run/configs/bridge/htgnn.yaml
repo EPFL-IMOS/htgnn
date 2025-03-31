@@ -1,0 +1,89 @@
+device: auto
+out_dir: results
+case: bridge
+seed: 76
+num_workers: 0
+print: both
+metric_best: mse
+
+### debug settings
+neptune_agg: false
+neptune_each_run: false
+tensorboard_each_run: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/bridge
+  train_file: train.csv
+  test_file: test.csv
+  normalize: true
+  stride: 5
+  y_var: ['TrainLoad']
+  scaler_type: cminmax
+  window_size: 60
+  use_hetero: true
+  include_lowf: true
+  include_highf: true
+  include_exo: true
+  aug_lowf_diff: false
+  only_lowf_diff: true
+
+task:
+  type: bridge
+  train_type: mapping
+  level: graph
+
+### default model paramters
+model:
+  output_dim: 1
+  dropout: 0.2
+  activation: silu
+  norm_func: batch
+  type: htgnn
+  htgnn:
+    aug_exovar: true
+    node_embed_dim: 20
+    exovar_embed_dim: 20
+    cnn:
+      gating: true
+      channel_sizes: [10, 10, 1]
+      kernel_sizes: [3, 5]
+      dilations: [1, 2]
+      emb_concat: true
+    head:
+      do_norm: false
+      num_layers: 3
+      embed_dim: 20
+      use_rnn: true
+      rnn_type: lstm
+      rnn_bidirectional: true
+    gnn_embed_dim: 40
+    num_gnn_layers: 3
+    do_encoder_norm: false
+    do_gnn_norm: false
+    gnn_norm_type: batch
+    hetero_agg: mean
+
+### training paramters
+train:
+  ckpt_period: 5
+  draw_period: 1
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 512
+  early_stop_patience: 20
+  early_stop_min: 50
+  
+### optimizer paramters
+optim:
+  warmup: true
+  warmup_iters: 200
+  warmup_initial_lr: 1e-4
+  base_lr: 5e-3
+  max_epochs: 150
+  scheduler: plateau
+  patience: 5
+  factor: 0.9
+  criterion: l2

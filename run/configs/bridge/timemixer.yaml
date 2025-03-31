@@ -1,0 +1,74 @@
+device: auto
+out_dir: results
+case: bridge
+seed: 76
+num_workers: 0
+print: both
+metric_best: mse
+
+### debug settings
+neptune_agg: false
+neptune_each_run: true
+tensorboard_each_run: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/bridge
+  train_file: train.csv
+  test_file: test.csv
+  normalize: true
+  stride: 5
+  y_var: ['TrainLoad']
+  scaler_type: cminmax
+  window_size: 60
+  use_hetero: false
+  include_lowf: true
+  include_highf: true
+  include_exo: true
+  aug_lowf_diff: false
+  only_lowf_diff: true
+
+task:
+  type: bridge
+  train_type: mapping
+  level: graph
+
+### default model paramters
+model:
+  output_dim: 1
+  dropout: 0.1
+  type: timemixer
+  timemixer:
+    decomp_method: dft_decomp
+    num_down_sampling_layers: 2
+    down_sampling_window: 1
+    down_sampling_method: conv
+    use_norm: 0
+    e_layers: 2
+    d_model: 32
+    topk: 9
+    d_ff: 64
+
+### training paramters
+train:
+  ckpt_period: 5
+  draw_period: 1
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 512
+  early_stop_patience: 10
+  early_stop_min: 50
+  
+### optimizer paramters
+optim:
+  warmup: true
+  warmup_iters: 200
+  warmup_initial_lr: 1e-4
+  base_lr: 5e-3
+  max_epochs: 150
+  scheduler: plateau
+  patience: 5
+  factor: 0.9
+  criterion: l2
