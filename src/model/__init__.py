@@ -1,0 +1,1 @@
+GRAPH_MODELS = ['htgnn', 'mtgat']
