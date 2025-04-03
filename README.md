@@ -1,12 +1,12 @@
 # HTGNN: Graph Neural Networks for Virtual Sensing in Complex Systems: Addressing Heterogeneous Temporal Dynamics
 
-[![Paper DOI](https://img.shields.io/badge/DOI-10.1016/j.ymssp.2024.111544-blue)](https://doi.org/10.1016/j.ymssp.2024.111544)
+[![Paper DOI](https://img.shields.io/badge/DOI-10.1016/j.ymssp.2024.112544-blue)](https://doi.org/10.1016/j.ymssp.2024.112544)
 
 This repository contains the official implementation for the paper "Graph Neural Networks for Virtual Sensing in Complex Systems: Addressing Heterogeneous Temporal Dynamics".
 
 **Publication Status:**
 Our paper has been published in the **Mechanical Systems and Signal Processing (MSSP)** journal. You can access the official version here:
-[https://doi.org/10.1016/j.ymssp.2024.111544](https://doi.org/10.1016/j.ymssp.2024.111544)
+[https://doi.org/10.1016/j.ymssp.2024.112544](https://doi.org/10.1016/j.ymssp.2025.112544)
 
 ## Overview
 
