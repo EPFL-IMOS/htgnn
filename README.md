@@ -3,6 +3,7 @@
 [![Paper DOI](https://img.shields.io/badge/DOI-10.1016/j.ymssp.2025.112544-blue)](https://doi.org/10.1016/j.ymssp.2025.112544)
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14972954.svg)](https://doi.org/10.5281/zenodo.14972954)
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14959000.svg)](https://doi.org/10.5281/zenodo.14959000)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/graph-neural-networks-for-virtual-sensing-in/load-virtual-sensing-on-skf-bls-dataset)](https://paperswithcode.com/sota/load-virtual-sensing-on-skf-bls-dataset?p=graph-neural-networks-for-virtual-sensing-in)
 
 This repository contains the official implementation for the paper "Graph Neural Networks for Virtual Sensing in Complex Systems: Addressing Heterogeneous Temporal Dynamics".
 
